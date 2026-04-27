@@ -32,7 +32,7 @@ void geo (Gerenciador quadras, FILE* arq_geo) {
                 cq = criaCores( "1.0px", "steelblue" , "MistyRose");
             }
             sscanf (linha, "%s %lf %lf %lf %lf", cep, &x, &y, &w, &h);
-            Quadra q = cria_quadra(cep, x, y, w, h, cq);
+            Pessoa q = cria_quadra(cep, x, y, w, h, cq);
             desenha_retangulo_svg(arq_geo, q);
             insere_registro (quadras, ??);
         } else {
