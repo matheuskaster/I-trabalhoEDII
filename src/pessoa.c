@@ -73,7 +73,7 @@ Pessoa cria_pessoa (char* cpf, char* nome, char* sobrenome, char sexo, char* nas
     strcpy(p->sobrenome, sobrenome);
     p->sexo = sexo;
     strcpy(p->nasc, nasc);
-    p->m = false;
+    p->m = false; 
     return ((StrPessoa*) p);
 }
 

@@ -4,6 +4,7 @@
 #include "../include/path_utils.h"
 #include "../include/geo.h"
 #include "../include/pm.h"
+#include "../include/qry.h"
 #include "../include/hash.h"
 
 #define PATH_LEN 250
@@ -125,7 +126,7 @@ int main(int argc, char *argv[]) {
         free(path_txt_qry);
 
         if (file_svg_qry && file_txt) {
-            //qry(file_qry, file_svg_qry, file_txt, path_svg_qry);
+            qry(hash_quadras, hash_pessoas, file_qry, file_txt, file_svg_qry);
 
             char* path_dump_quadras = atualiza_extensao(dir_saida, arq_geo, ".hfd");
             gera_dump(hash_quadras, path_dump_quadras);

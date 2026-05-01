@@ -2,6 +2,7 @@
 // Created by Matheus on 21/04/2026.
 //
 #include "../include/pm.h"
+#include "../include/pessoa.h"
 #include <stdlib.h>
 
 void pm (Gerenciador pessoas, FILE* arq_pm) {
