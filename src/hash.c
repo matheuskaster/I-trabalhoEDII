@@ -5,7 +5,6 @@
 
 #define TAM_BUCKET 3
 
-
 typedef struct {
     char chave[32];
     char dados[1024];
@@ -117,6 +116,7 @@ Gerenciador cria_hash(const char *dir_filename, const char *bucket_filename) {
         fwrite(&(hash->cabecalho), sizeof(StrCabecalho), 1, hash->dir_file);
 
         StrBucket bucket;
+        memset(&bucket, 0, sizeof(StrBucket));
         bucket.profundidade_local = 0;
         bucket.countagem = 0;
 
@@ -135,6 +135,8 @@ Gerenciador cria_hash(const char *dir_filename, const char *bucket_filename) {
 
 Registro cria_registro(char* chave, char* dados) {
     StrRegistro* r = (StrRegistro*)malloc(sizeof(StrRegistro));
+    memset(r, 0, sizeof(StrRegistro));
+
     strcpy (((StrRegistro*)r)->chave, chave);
     strcpy (((StrRegistro*)r)->dados, dados);
     return (Registro) r;
@@ -148,7 +150,7 @@ Registro busca_registro(Gerenciador hash, char* chave) {
     StrBucket b;
     fseek(h->bucket_file, bucket_offset, SEEK_SET);
     fread(&b, sizeof(StrBucket), 1, h->bucket_file);
-    for (int i = 0; i < TAM_BUCKET; i++){
+    for (int i = 0; i < b.countagem; i++){
         if (strcmp(b.registros[i].chave, chave) == 0) {
             StrRegistro* r = (StrRegistro*)malloc(sizeof(StrRegistro));
             *r = b.registros[i];
@@ -162,6 +164,13 @@ void insere_registro(Gerenciador hash, Registro r) {
     StrGerenciador* h = (StrGerenciador*) hash;
     StrRegistro* reg = (StrRegistro*) r;
     char* chave = get_chave_registro(r);
+
+    Registro existente = busca_registro(hash, chave);
+    if (existente != NULL) {
+        libera_registro(existente);
+        return;
+    }
+
     int dir_index = hash_function(chave, h->cabecalho.profundidade_global);
     long bucket_offset = get_bucket_offset(h, dir_index);
 
@@ -181,7 +190,7 @@ void insere_registro(Gerenciador hash, Registro r) {
                 int tamanho_diretorio_atual = 1 << h->cabecalho.profundidade_global;
                 h->cabecalho.profundidade_global++;
                 fseek(h->dir_file, 0, SEEK_SET);
-                fwrite(&(h->cabecalho.profundidade_global), sizeof(int), 1, h->dir_file);
+                fwrite(&(h->cabecalho.profundidade_global), sizeof(StrCabecalho), 1, h->dir_file);
 
                 for (int i = 0; i < tamanho_diretorio_atual; i++) {
                     long offset_existente = get_bucket_offset(h, i);
@@ -193,6 +202,9 @@ void insere_registro(Gerenciador hash, Registro r) {
             int nova_profundidade_local = profundidade_local + 1;
 
             StrBucket b_atual, b_novo;
+            memset(&b_atual, 0, sizeof(StrBucket));
+            memset(&b_novo, 0, sizeof(StrBucket));
+
             b_atual.profundidade_local = nova_profundidade_local;
             b_atual.countagem = 0;
             b_novo.profundidade_local = nova_profundidade_local;
@@ -205,7 +217,7 @@ void insere_registro(Gerenciador hash, Registro r) {
 
             StrRegistro temp_registros[TAM_BUCKET + 1];
             for (int i = 0; i < TAM_BUCKET; i++) {
-                temp_registros[i] = b_atual.registros[i];
+                temp_registros[i] = b.registros[i];
             }
             temp_registros[TAM_BUCKET] = *reg;
 
@@ -240,7 +252,7 @@ void insere_registro(Gerenciador hash, Registro r) {
             fflush(h->dir_file);
             fflush(h->bucket_file);
 
-            if (b.countagem > TAM_BUCKET) {
+            if (b_atual.countagem > TAM_BUCKET) {
                 b = b_atual;
             } 
             else if (b_novo.countagem > TAM_BUCKET) {
@@ -263,8 +275,8 @@ int remove_registro (Gerenciador hash, Registro r) {
     StrBucket b;
     fseek(h->bucket_file, bucket_offset, SEEK_SET);
     fread(&b, sizeof(StrBucket), 1, h->bucket_file);
-    for (int i = 0; i < TAM_BUCKET; i++){
-        if (b.registros[i].chave == chave) {
+    for (int i = 0; i < b.countagem; i++){
+        if (strcmp(b.registros[i].chave, chave) == 0) {
             b.registros[i] = b.registros[b.countagem - 1];
             b.countagem--;
             fseek(h->bucket_file, bucket_offset, SEEK_SET);
