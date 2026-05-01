@@ -52,7 +52,7 @@ char* get_cstrk (Cores cq) {
 
 
 
-Quadra cria_quadra (char* cep, double x, double y, double w, double h, Cores cq) {
+Quadra cria_quadra (char* cep, double x, double y, double w, double h) {
     StrQuadra *q = malloc(sizeof(StrQuadra));
     strcpy(q->cep, cep);
     q->x = x;

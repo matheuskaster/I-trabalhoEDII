@@ -23,7 +23,7 @@ Gerenciador cria_hash(const char* dir_filename, const char* bucket_filename);
 /// @param chave É a chave para identificá-lo.
 /// @param dados São as outras informações referentes à esse registro.
 /// @return Retorna um ponteiro para o registro recém-criado.
-Registro cria_registro(char* chave, int dados);
+Registro cria_registro(char* chave, char* dados);
 
 /// @brief Troca a chave do registro desejado.
 /// @param r É o ponteiro para o registro que terá sua chave alterada.
@@ -33,7 +33,7 @@ void set_chave_registro(Registro r, char* chave);
 /// @brief Informa a chave do registro desejado.
 /// @param r É o ponteiro para o registro que guarda a informação.
 /// @return Retorna o número inteiro, que representa a chave do registro passado por parâmetro.
-int get_chave_registro(Registro r);
+char* get_chave_registro(Registro r);
 
 /// @brief Troca os dados do registro desejado.
 /// @param r É o ponteiro para o registro que terá seus dados alterados.
@@ -43,7 +43,7 @@ void set_dados_registro(Registro r, char* dados);
 /// @brief Informa os dados do registro desejado.
 /// @param r É o ponteiro para o registro que guarda a informação.
 /// @return Retorna o número inteiro, que representa os dados do registro passado por parâmetro.
-int get_dados_registro(Registro r);
+char* get_dados_registro(Registro r);
 
 /// @brief Busca dentro do arquivo um registro que está inserido na hash. 
 /// @param hash É o gerenciador para acessar e controlar os arquivos.
@@ -58,9 +58,19 @@ void insere_registro(Gerenciador hash, Registro r);
 
 /// @brief Função que remove um registro de um bucket.
 /// @param hash É o gerenciador para acessar e controlar os arquivos.
-/// @param chave É o ponteiro para o registro que terá seus dados alterados.
+/// @param r É o ponteiro para o registro que terá seus dados alterados.
 /// @return Retorna 1, se tiver removido e 0 se não tiver encontrado a chave do registro a ser removido.
 int remove_registro(Gerenciador hash, Registro r);
+
+/// @brief Função para criar versão legível de um hash file binário.
+/// @param hash É o gerenciador para acessar o arquivo que terá sua versão hfd, para poder entendê-lo.
+/// @param file_hfd_hash É o nome do arquivo que será escrito a versão hfd, do hashfile binário desejado.
+void gera_dump(Gerenciador hash, const char* file_hfd_hash);
+
+/// @brief Função que olha a quantidade de registros e monta um vetor, encapsulado (void*), com ponteiro para cada um dos registros do hash sequencialmente.
+/// @param qtd_retornada É um inteiro, que vai ser alterado por referência, indicando qual é o tamanho do vetor montado, ou seja, a quantidade de registros.
+/// @return Retorna um vetor do ponteiros para void.
+Registro* pega_todos_registros(Gerenciador hash, int* qtd_retornada);
 
 /// @brief Libera a memória do registro.
 /// @param r É o ponteiro para o registro que terá sua memória liberada.

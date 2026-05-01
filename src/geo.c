@@ -3,10 +3,11 @@
 //
 #include "../include/geo.h"
 #include "../include/svg.h"
+#include "../src/quadras.h"
 #include <stdlib.h>
 #include <string.h>
 
-void geo (Gerenciador quadras, FILE* arq_geo) {
+void geo (Gerenciador quadras, FILE* arq_geo, FILE* arq_svg) {
 
     if(arq_geo == NULL){
         printf("Arquivo .geo não encontrado. \n");
@@ -17,13 +18,14 @@ void geo (Gerenciador quadras, FILE* arq_geo) {
     char comando[3];
     Cores cq = NULL;
 
+    abre_svg(arq_svg);
+
     while (fgets(linha, sizeof(linha), arq_geo) != NULL) {
         if (linha[0] == '\n' || linha[0] == '#'){
             continue;
         }
 
         sscanf(linha, "%s", comando);
-
         if (strcmp(comando, "q") == 0) {
             char cep[16];
             double x, y, w, h;
@@ -32,15 +34,16 @@ void geo (Gerenciador quadras, FILE* arq_geo) {
                 cq = criaCores( "1.0px", "steelblue" , "MistyRose");
             }
             sscanf (linha, "%s %lf %lf %lf %lf", cep, &x, &y, &w, &h);
-            Pessoa q = cria_quadra(cep, x, y, w, h, cq);
-            desenha_retangulo_svg(arq_geo, q);
+            Quadra q = cria_quadra(cep, x, y, w, h);
+            desenha_retangulo_svg(arq_geo, q, cq);
             insere_registro (quadras, ??);
         } else {
-            char sw[6], cfill[8], cstrk[8];
-            sscanf (linha, "%%s %s %s", sw, cfill, cstrk);
-            setSwCores(cq, sw);
-            setCfillCores(cq, cfill);
-            setCstrkCores(cq, cstrk);
+            char sw[16], cfill[16], cstrk[16];
+            sscanf (linha, "%s %s %s", sw, cfill, cstrk);
+            set_sw(cq, sw);
+            set_cfill(cq, cfill);
+            set_cstrk(cq, cstrk);
         }
     }
+    fecha_svg(arq_svg);
 }

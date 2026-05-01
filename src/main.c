@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/path_utils.h"
+#include "../include/geo.h"
+#include "../include/pm.h"
+#include "../include/hash.h"
 
 #define PATH_LEN 250
 #define FILE_NAME_LEN 100
@@ -71,7 +74,7 @@ int main(int argc, char *argv[]) {
     free(path_geo);
 
     char* path_pm = monta_caminho_completo(dir_entrada, arq_pm);
-    file_geo = fopen(path_pm, "r");
+    file_pm = fopen(path_pm, "r");
     if (!file_pm) {
         printf("[ERRO] não foi possível abrir o .pm: %s\n", path_pm);
         return 1;
@@ -87,10 +90,21 @@ int main(int argc, char *argv[]) {
     }
     free(path_svg_geo);
 
-    //geo(file_geo);
-    //abre_svg(file_svg_geo);
-    //svg(file_svg_geo);
-    //fecha_svg(file_svg_geo);
+    char* path_dir_quadras = atualiza_extensao(dir_saida, arq_geo, ".dir");
+    char* path_bkt_quadras = atualiza_extensao(dir_saida, arq_geo, ".bkt");
+    Gerenciador hash_quadras = cria_hash(path_dir_quadras, path_bkt_quadras);
+    free(path_dir_quadras);
+    free(path_bkt_quadras);
+
+    char* path_dir_pessoas = atualiza_extensao(dir_saida, arq_pm, ".dir");
+    char* path_bkt_pessoas = atualiza_extensao(dir_saida, arq_pm, ".bkt");
+    Gerenciador hash_pessoas = cria_hash(path_dir_pessoas, path_bkt_pessoas);
+    free(path_dir_pessoas);
+    free(path_bkt_pessoas);
+
+
+    geo(hash_quadras, file_geo, file_svg_geo);
+    pm(hash_pessoas, file_pm);
 
     if (strlen(arq_qry) > 0) {
 
@@ -112,15 +126,26 @@ int main(int argc, char *argv[]) {
 
         if (file_svg_qry && file_txt) {
             //qry(file_qry, file_svg_qry, file_txt, path_svg_qry);
+
+            char* path_dump_quadras = atualiza_extensao(dir_saida, arq_geo, ".hfd");
+            gera_dump(hash_quadras, path_dump_quadras);
+            free(path_dump_quadras);
+
+            char* path_dump_pessoas = atualiza_extensao(dir_saida, arq_pm, ".hfd");
+            gera_dump(hash_pessoas, path_dump_pessoas);
+            free(path_dump_pessoas);
         }
         free(path_svg_qry);
     }
 
-    if (file_geo)     fclose(file_geo);
-    if (file_svg_geo) fclose(file_svg_geo);
+    fclose(file_geo);
+    fclose(file_svg_geo);
+    fclose(file_pm);
     if (file_qry)     fclose(file_qry);
     if (file_svg_qry) fclose(file_svg_qry);
     if (file_txt)     fclose(file_txt);
+    if (hash_quadras) libera_hash(hash_quadras);
+    if (hash_pessoas) libera_hash(hash_pessoas);
 
     return 0;
 }

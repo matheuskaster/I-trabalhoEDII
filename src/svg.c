@@ -17,8 +17,8 @@ void abre_svg (FILE* arq_svg) {
     fprintf(arq_svg,"<g>\n");
 }
 
-void desenha_retangulo_svg (FILE* arq_svg, Retangulo r) {
-    fprintf(arq_svg, "<rect id=\"%d\" style=\"fill:%s;fill-opacity:0.5;stroke:%s\" height=\"%lf\" width=\"%lf\" y=\"%lf\" x=\"%lf\" stroke-width=\"%lf\" />\n", get_id_retangulo(r), get_corp_retangulo(r), get_corb_retangulo(r), get_h_retangulo(r), get_w_retangulo(r), get_y_retangulo(r), get_x_retangulo(r), 1.0);
+void desenha_quadra_svg (FILE* arq_svg, Quadra q) {
+    fprintf(arq_svg, "<rect id=\"%d\" style=\"fill:%s;fill-opacity:0.5;stroke:%s\" height=\"%lf\" width=\"%lf\" y=\"%lf\" x=\"%lf\" stroke-width=\"%lf\" />\n", get_cep_quadra(q), get_cfill(q), get_cstrk(q), get_h_retangulo(q), get_w_retangulo(q), get_y_retangulo(q), get_x_retangulo(q), 1.0);
 }
 
 void fecha_svg(FILE* arq_svg) {

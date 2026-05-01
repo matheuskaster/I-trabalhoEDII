@@ -14,6 +14,7 @@ de dados localizada atraves do gerenciador.
 
 ///@param quadras Estrutura que tem acesso a todas as informacoes para alterar os atributos das quadras.
 ///@param arq_geo Ponteiro do tipo arquivo, para acessar as informacoes das quadras.
-void geo (Gerenciador quadras, FILE* arq_geo);
+///@param arq_svg Ponteiro do tipo arquivo, para poder desenhar as quadras.
+void geo (Gerenciador quadras, FILE* arq_geo, FILE* arq_svg);
 
 #endif

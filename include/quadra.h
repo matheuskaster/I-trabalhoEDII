@@ -56,7 +56,7 @@ char* get_cstrk (Cores cq);
 /// @param w É um número real correspondente a largura do retângulo.
 /// @param h É um número real correspondente a altura do retângulo.
 /// @return Retorna uma quadra criada com os parâmetros.
-Quadra cria_quara (char* cep, double x, double y, double w, double h);
+Quadra cria_quadra (char* cep, double x, double y, double w, double h);
 
 /// @brief O ponteiro para os char, passado por parâmetro na função, torna-se o novo cep da quadra.
 /// @param q É um ponteiro que aponta para a quadra.
