@@ -33,13 +33,21 @@ void geo (Gerenciador quadras, FILE* arq_geo, FILE* arq_svg) {
                 //settando cores padroes, pois não foi informado quais sao as cores desejadas.
                 cq = criaCores( "1.0px", "steelblue" , "MistyRose");
             }
-            sscanf (linha, "%s %lf %lf %lf %lf", cep, &x, &y, &w, &h);
+            sscanf (linha, "q %s %lf %lf %lf %lf", cep, &x, &y, &w, &h);
             Quadra q = cria_quadra(cep, x, y, w, h);
-            desenha_retangulo_svg(arq_geo, q, cq);
-            insere_registro (quadras, ??);
+            desenha_retangulo_svg(arq_svg, q, cq);
+
+            char dados_quadra[1024];
+            get_dados_completos_quadra(q, dados_quadra);
+            Registro reg = cria_registro(cep, dados_quadra);
+
+            insere_registro (quadras, reg);
+
+            libera_registro(reg);
+            libera_quadra(q);
         } else {
             char sw[16], cfill[16], cstrk[16];
-            sscanf (linha, "%s %s %s", sw, cfill, cstrk);
+            sscanf (linha, "cq %s %s %s", sw, cfill, cstrk);
             set_sw(cq, sw);
             set_cfill(cq, cfill);
             set_cstrk(cq, cstrk);

@@ -49,6 +49,8 @@ void set_complemento(Pessoa p, char* compl);
 /// @return Retorna o complemento da quadra.
 char* get_complemento (Pessoa p);
 
+/// Função prática para definir todos os dados de endereço de uma só vez.
+void recebe_moradia (Pessoa p, char* cep, char face, int num, char* compl);
 
 // TADs relacionados a pessoa:
 
@@ -60,6 +62,12 @@ char* get_complemento (Pessoa p);
 /// @param nasc String para indicar qual é a data do nascimento de uma pessoa, do padrão DD/MM/AAAA.
 /// @return Retorna a pessoa criada com os parâmetros.
 Pessoa cria_pessoa (char* cpf, char* nome, char* sobrenome, char sexo, char* nasc);
+
+/// Função para gerar uma string única com todos os dados da pessoa.
+void get_dados_completos_pessoa(Pessoa p, char* buffer);
+
+/// Função para ler a string do hash e recriar a struct Pessoa.
+Pessoa reconstroi_pessoa(char* cpf, char* dados_do_hash);
 
 /// @brief O ponteiro para os char, passado por parâmetro na função, torna-se o novo cpf da pessoa.
 /// @param p É o ponteiro que aponta para a pessoa.

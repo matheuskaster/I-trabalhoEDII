@@ -64,7 +64,16 @@ char* get_complemento (Pessoa p) {
     return ((StrPessoa*)p)->compl;
 }
 
+void recebe_moradia (Pessoa p, char* cep, char face, int num, char* compl) {
+    if (p == NULL) return;
+    StrPessoa* _p = (StrPessoa*) p;
+    _p->m = true;
 
+    strcpy(_p->cep, cep);
+    _p->face = face;
+    _p->num = num;
+    strcpy(_p->compl, compl);
+}
 
 Pessoa cria_pessoa (char* cpf, char* nome, char* sobrenome, char sexo, char* nasc) {
     StrPessoa *p = malloc(sizeof(StrPessoa));
@@ -73,8 +82,42 @@ Pessoa cria_pessoa (char* cpf, char* nome, char* sobrenome, char sexo, char* nas
     strcpy(p->sobrenome, sobrenome);
     p->sexo = sexo;
     strcpy(p->nasc, nasc);
-    p->m = false; 
+    p->m = false;
     return ((StrPessoa*) p);
+}
+
+void get_dados_completos_pessoa(Pessoa p, char* buffer) {
+    if (p == NULL) return;
+    StrPessoa* _p = (StrPessoa*) p;
+
+    if (_p->m) {
+        sprintf(buffer, "CPF: %s | Nome: %s | SOBRENOME: %s | Sexo: %c | Nasc: %s | CEP: %s | Face: %c | Num: %d | Compl: %s", _p->cpf, _p->nome, _p->sobrenome, _p->sexo, _p->nasc, _p->cep, _p->face, _p->num, _p->compl);
+    } else {
+        sprintf(buffer, "CPF: %s | Nome: %s | SOBRENOME: %s | Sexo: %c | Nasc: %s | Nao e morador", _p->cpf, _p->nome, _p->sobrenome, _p->sexo, _p->nasc);
+    }
+}
+
+
+Pessoa reconstroi_pessoa(char* cpf, char* dados_do_hash) {
+    char nome[32], sobrenome[32], nasc[12];
+    char sexo;
+
+    if (strstr(dados_do_hash, "Nao e morador") != NULL) {
+        sscanf(dados_do_hash, "CPF: %*s | Nome: %s | SOBRENOME: %s | Sexo: %c | Nasc: %s | Nao e morador", nome, sobrenome, &sexo, nasc);
+
+        return cria_pessoa(cpf, nome, sobrenome, sexo, nasc);
+    }
+
+    char cep[16], compl[16];
+    char face;
+    int num;
+
+    sscanf(dados_do_hash, "CPF: %*s | Nome: %s | SOBRENOME: %s | Sexo: %c | Nasc: %s | CEP: %s | Face: %c | Num: %d | Compl: %s", nome, sobrenome, &sexo, nasc, cep, &face, &num, compl);
+    Pessoa p = cria_pessoa(cpf, nome, sobrenome, sexo, nasc);
+
+    recebe_moradia(p, cep, face, num, compl);
+
+    return p;
 }
 
 void set_cpf_pessoa (Pessoa p, char* cpf) {

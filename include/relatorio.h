@@ -11,7 +11,7 @@
 /* MODULO RELATORIO
 Esse modulo foi criado com a intencao de deixar o modulo que cuida e controla as acoes descritas no arquivo do qry
 mais organizado. Ou seja, o qry faz so a leitura do que e o comando que o programa deseja executar, mas para deixar
-ambos, tanto esse quanto o outro, mais compactos e legiveis, aqui estara a implementacao do que deve acontecer apos
+ambos, tanto esse quanto o outro, mais compactos e legiveis. Aqui estara a implementacao do que deve acontecer apos
 cada um dos comandos. Que foi descrito no documento do projeto.
 */
 
@@ -31,10 +31,9 @@ void rq (Gerenciador quadras, Gerenciador pessoas, char* cep, FILE* file_txt, FI
 void pq (Gerenciador quadras, Gerenciador pessoas, char* cep, FILE* file_svg);
 
 /// @brief Produz várias estatísticas sobre habitantes de Bitnópolis.
-/// @param quadras Estrutura que tem acesso a todas as informacoes para alterar os atributos das quadras.
 /// @param pessoas Estrutura que tem acesso a todas as informacoes para alterar os atributos das pessoas.
 /// @param file_txt Arquivo onde será reportado todos os dados sobre Bitnópolis, e todas suas estatísticas.
-void censo (Gerenciador quadras, Gerenciador pessoas, FILE* file_txt);
+void censo (Gerenciador pessoas, FILE* file_txt);
 
 /// @brief Reporta os dados sobre habitante identificado por cpf.
 /// @param pessoas Estrutura que tem acesso a todas as informacoes para alterar os atributos das pessoas.
@@ -59,17 +58,22 @@ void nasc (Gerenciador pessoas, char* cpf, char* nome, char* sobrenome, char* na
 void rip (Gerenciador pessoas, char* cpf, FILE* file_txt, FILE* file_svg);
 
 /// @brief Faz com que o programa registre que o morador identificado por cpf se mudou para um novo endereço.
+/// @param quadras Estrutura que tem acesso a todas as informacoes para alterar os atributos das quadras.
 /// @param pessoas Estrutura que tem acesso a todas as informacoes para alterar os atributos das pessoas.
 /// @param cpf É o cpf específico de cada pessoa, para identificar qual é a pessoa desejada.
 /// @param cep É o cep específico de cada quadra, para identificar qual é a quadra desejada.
+/// @param face É um char, para mostrar em qual canto da quadra fica a moradia.
+/// @param num É um número inteiro, para dizer qual é o número do endereço do local (distância da borda).
+/// @param cmpl É uma String para dizer qual é o complemento do lugar, ex.: apartamento, e o número.
 /// @param file_svg Arquivo que será ilustrará o endereço de destino com um pequeno quadrado vermelho no local.
-void mud (Gerenciador pessoas, char* cpf, char* cep, char face, int num, char* cmpl, FILE* file_svg);
+void mud (Gerenciador quadras, Gerenciador pessoas, char* cpf, char* cep, char face, int num, char* cmpl, FILE* file_svg);
 
 /// @brief Faz com que o programa registre que o morador identificado por cpf foi despejado.
+/// @param quadras Estrutura que tem acesso a todas as informacoes para alterar os atributos das quadras.
 /// @param pessoas Estrutura que tem acesso a todas as informacoes para alterar os atributos das pessoas.
 /// @param cpf É o cpf específico de cada pessoa, para identificar qual é a pessoa desejada.
 /// @param file_txt Arquivo onde será reportado os dados do habitante e endereço onde ocorreu o despejo.
 /// @param file_svg Arquivo que será ilustrará um pequeno círculo preto no local do despejo.
-void dspj (Gerenciador pessoas, char* cpf, FILE* file_txt, FILE* file_svg);
+void dspj (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, FILE* file_svg);
 
-#endif RELATORIO_H
+#endif

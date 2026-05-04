@@ -58,6 +58,12 @@ char* get_cstrk (Cores cq);
 /// @return Retorna uma quadra criada com os parâmetros.
 Quadra cria_quadra (char* cep, double x, double y, double w, double h);
 
+/// Função para gerar uma string única com todos os dados da quadra.
+void get_dados_completos_quadra(Quadra q, char* buffer);
+
+/// Função para ler a string do hash e recriar a struct Quadra.
+Quadra reconstroi_quadra(char* cep, char* dados_do_hash);
+
 /// @brief O ponteiro para os char, passado por parâmetro na função, torna-se o novo cep da quadra.
 /// @param q É um ponteiro que aponta para a quadra.
 /// @param cep É o novo cep da quadra.

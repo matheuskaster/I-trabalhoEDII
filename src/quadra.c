@@ -62,6 +62,20 @@ Quadra cria_quadra (char* cep, double x, double y, double w, double h) {
     return ((StrQuadra*) q);
 }
 
+void get_dados_completos_quadra(Quadra q, char* buffer) {
+    if (q == NULL) return;
+    StrQuadra* _q = (StrQuadra*) q;
+
+    sprintf(buffer, "X: %.2lf | Y: %.2lf | W: %.2lf | H: %.2lf", _q->x, _q->y, _q->w, _q->h);
+}
+
+Quadra reconstroi_quadra(char* cep, char* dados_do_hash) {
+    double x, y, w, h;
+    sscanf(dados_do_hash, "X: %lf | Y: %lf | W: %lf | H: %lf", &x, &y, &w, &h);
+
+    return cria_quadra(cep, x, y, w, h);
+}
+
 void set_cep_quadra (Quadra q, char* cep) {
     strcpy (((StrQuadra*)q)->cep, cep);
 }
