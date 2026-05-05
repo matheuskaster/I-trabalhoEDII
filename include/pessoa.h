@@ -119,6 +119,11 @@ void set_nasc_pessoa (Pessoa p, char* nasc);
 /// @return Retorna a data de nascimento da pessoa.
 char* get_nasc_pessoa (Pessoa p);
 
+/// @brief O boolean passado por parâmetro na função, torna-se o novo status (relação a moradia) da pessoa.
+/// @param p É o ponteiro que aponta para a pessoa.
+/// @param status É a novo status de moradia da pessoa.
+void set_eh_morador (Pessoa p, bool status);
+
 /// @brief Responde, quando questionado, se uma determinada pessoa possui moradia.
 /// @param p É o ponteiro que aponta para a pessoa.
 /// @return Retorna true, se tiver moradia, ou false, caso contrário.

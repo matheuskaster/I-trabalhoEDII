@@ -8,16 +8,16 @@
 #include <string.h>
 
 typedef struct {
-    char cpf[15];
+    char cpf[32];
     char nome[32];
     char sobrenome[32];
     char sexo;
-    char nasc[12];
+    char nasc[32];
     bool m;
-    char cep[10];
+    char cep[32];
     char face;
     int num;
-    char compl[10];
+    char compl[16];
 } StrPessoa;
 
 void set_cep (Pessoa p, char *cep) {
@@ -144,11 +144,11 @@ char* get_sobrenome_pessoa (Pessoa p) {
     return ((StrPessoa*)p)->sobrenome;
 }
 
-void set_sexo (Pessoa p, char sexo) {
+void set_sexo_pessoa (Pessoa p, char sexo) {
     ((StrPessoa*)p)->sexo = sexo;
 }
 
-char get_sexo (Pessoa p) {
+char get_sexo_pessoa (Pessoa p) {
     return ((StrPessoa*)p)->sexo;
 }
 
@@ -158,6 +158,10 @@ void set_nasc_pessoa (Pessoa p, char* nasc) {
 
 char* get_nasc_pessoa (Pessoa p) {
     return ((StrPessoa*)p)->nasc;
+}
+
+void set_eh_morador (Pessoa p, bool status) {
+    ((StrPessoa*)p)->m = status;
 }
 
 bool eh_morador (Pessoa p) {

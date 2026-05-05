@@ -5,6 +5,7 @@
 #include "../include/hash.h"
 #include "../include/qry.h"
 #include "../include/svg.h"
+#include "../include/relatorio.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -32,7 +33,7 @@ void qry (Gerenciador quadras, Gerenciador pessoas, FILE* file_qry, FILE* file_t
             pq(quadras, pessoas, cep, file_svg);
         }
         else if (strcmp(comando, "censo") == 0) {
-            censo(quadras, pessoas, file_txt);
+            censo(pessoas, file_txt);
         }
         else if (strcmp(comando, "h?") == 0) {
             char cpf[15];
@@ -40,10 +41,10 @@ void qry (Gerenciador quadras, Gerenciador pessoas, FILE* file_qry, FILE* file_t
             h(pessoas, cpf, file_txt);
         }
         if (strcmp(comando, "nasc") == 0) {
-            char cpf[15], nome[32], sobrenome[32], nasc[12];
+            char cpf[15], nome[32], sobrenome[32], dataNascimento[12];
             char sexo;
-            sscanf(linha, "nasc %s %s %s %s %c", cpf, nome, sobrenome, nasc, sexo);
-            nasc(pessoas, cpf, nome, sobrenome, nasc, sexo);
+            sscanf(linha, "nasc %s %s %s %s %c", cpf, nome, sobrenome, dataNascimento, &sexo);
+            nasc(pessoas, cpf, nome, sobrenome, dataNascimento, sexo);
         }
         else if (strcmp(comando, "rip") == 0) {
             char cpf[15];
@@ -55,13 +56,13 @@ void qry (Gerenciador quadras, Gerenciador pessoas, FILE* file_qry, FILE* file_t
             char face;
             int num;
 
-            sscanf(linha,"mud %s %s %s %c, %i", cpf, cep, &face, &num, cmpl);
-            mud(pessoas, cpf, cep, face, num, cmpl, file_svg);
+            sscanf(linha,"mud %s %s %c %i %s", cpf, cep, &face, &num, cmpl);
+            mud(quadras, pessoas, cpf, cep, face, num, cmpl, file_svg);
         }
         else if (strcmp(comando, "dspj") == 0) {
             char cpf[15];
             sscanf(linha,"dspj %s", cpf);
-            dspj(pessoas, cpf, file_txt, file_svg);
+            dspj(quadras, pessoas, cpf, file_txt, file_svg);
         }
     }
 }

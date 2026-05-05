@@ -40,7 +40,7 @@ void rq(Gerenciador quadras, Gerenciador pessoas, char* cep, FILE* file_txt, FIL
             fprintf(file_txt, "Nome: %s %s, CPF: %s\n", get_nome_pessoa(p), get_sobrenome_pessoa(p), cpf);
 
             char dados_basicos[1024];
-            sprintf(dados_basicos, "CPF: %s | Nome: %s %s | Sexo: %c | Nasc: %s | Nao e morador", get_cpf_pessoa(p), get_nome_pessoa(p), get_sobrenome_pessoa(p), get_sexo(p), get_nasc_pessoa(p));
+            sprintf(dados_basicos, "CPF: %s | Nome: %s %s | Sexo: %c | Nasc: %s | Nao e morador", get_cpf_pessoa(p), get_nome_pessoa(p), get_sobrenome_pessoa(p), get_sexo_pessoa(p), get_nasc_pessoa(p));
 
             remove_registro(pessoas, reg_atual);
             Registro reg_novo = cria_registro(cpf, dados_basicos);
@@ -135,7 +135,7 @@ void censo(Gerenciador pessoas, FILE* file_txt) {
 
         Pessoa p = reconstroi_pessoa(cpf, dados_pessoa);
 
-        char sexo = get_sexo(p);
+        char sexo = get_sexo_pessoa(p);
         bool morador = eh_morador(p);
 
         if (sexo == 'm') {
@@ -165,27 +165,27 @@ void censo(Gerenciador pessoas, FILE* file_txt) {
     fprintf(file_txt, "Total de Moradores: %d\n", total_moradores);
     fprintf(file_txt, "Total de Sem-tetos: %d\n", total_sem_teto);
 
-    fprintf(file_txt, "Proporção Moradores/Habitantes: %.2f%%\n", total_moradores / total_habitantes);
+    fprintf(file_txt, "Proporção Moradores/Habitantes: %d/%d \n", total_moradores, total_habitantes);
 
     fprintf(file_txt, "\n--- ESTATÍSTICAS POR GÊNERO ---\n");
     fprintf(file_txt, "Número de Homens: %d\n", total_homens);
     fprintf(file_txt, "Número de Mulheres: %d\n", total_mulheres);
 
-    fprintf(file_txt, "%% Habitantes Homens: %.2f%%\n", total_homens/ total_habitantes);
-    fprintf(file_txt, "%% Habitantes Mulheres: %.2f%%\n", total_mulheres / total_habitantes);
+    fprintf(file_txt, "%% Habitantes Homens: %d/%d\n", total_homens, total_habitantes);
+    fprintf(file_txt, "%% Habitantes Mulheres: %d/%d \n", total_mulheres, total_habitantes);
 
     fprintf(file_txt, "\n--- ESTATÍSTICAS DE MORADORES ---\n");
     if (total_moradores > 0) {
-        fprintf(file_txt, "%% Moradores Homens: %.2f%%\n", moradores_homens / total_moradores);
-        fprintf(file_txt, "%% Moradores Mulheres: %.2f%%\n", moradores_mulheres / total_moradores);
+        fprintf(file_txt, "%% Moradores Homens: %d/%d \n", moradores_homens,total_moradores);
+        fprintf(file_txt, "%% Moradores Mulheres: %d/%d \n", moradores_mulheres, total_moradores);
     } else {
         fprintf(file_txt, "Não há moradores para calcular a porcentagem.\n");
     }
 
     fprintf(file_txt, "\n--- ESTATÍSTICAS DE SEM-TETOS ---\n");
     if (total_sem_teto > 0) {
-        fprintf(file_txt, "%% Sem-tetos Homens: %.2f%%\n", (sem_teto_homens * 100.0) / total_sem_teto);
-        fprintf(file_txt, "%% Sem-tetos Mulheres: %.2f%%\n", (sem_teto_mulheres * 100.0) / total_sem_teto);
+        fprintf(file_txt, "%% Sem-tetos Homens: %d/%d \n", sem_teto_homens, total_sem_teto);
+        fprintf(file_txt, "%% Sem-tetos Mulheres: %d/%d \n", sem_teto_mulheres, total_sem_teto);
     } else {
         fprintf(file_txt, "Não há sem-tetos na cidade.\n");
     }
@@ -209,11 +209,11 @@ void h (Gerenciador pessoas, char* cpf, FILE* file_txt) {
     fprintf(file_txt, "--- DADOS DO HABITANTE ---\n");
     fprintf(file_txt, "CPF: %s . ", cpf);
     fprintf(file_txt, "Nome Completo: %s %s . ", get_nome_pessoa(p), get_sobrenome_pessoa(p));
-    fprintf(file_txt, "Sexo: %c . ", get_sexo(p));
+    fprintf(file_txt, "Sexo: %c . ", get_sexo_pessoa(p));
     fprintf(file_txt, "Data de Nascimento: %s . ", get_nasc_pessoa(p));
 
     if (eh_morador(p)) {
-        fprintf(file_txt, "Endereço: CEP %s | Face %c | Num: %d | Compl: %s\n", get_cep(p), get_face(p), get_num(p), get_compl(p));
+        fprintf(file_txt, "Endereço: CEP %s | Face %c | Num: %d | Compl: %s\n", get_cep(p), get_face(p), get_num(p), get_complemento(p));
     } else {
         fprintf(file_txt, "Situação: Sem-teto\n");
     }
@@ -240,14 +240,14 @@ void rip (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, F
 
     fprintf(file_txt, "--- FALECIMENTO ---\n");
     fprintf(file_txt, "Nome: %s %s | CPF: %s\n", get_nome_pessoa(p), get_sobrenome_pessoa(p), cpf);
-    fprintf(file_txt, "Nascido em: %s | Sexo: %c\n", get_nasc_pessoa(p), get_sexo(p));
+    fprintf(file_txt, "Nascido em: %s | Sexo: %c\n", get_nasc_pessoa(p), get_sexo_pessoa(p));
 
     if (eh_morador(p)) {
         char* cep = get_cep(p);
         char face = get_face(p);
         int num = get_num(p);
 
-        fprintf(file_txt, "Endereço: CEP %s, Face %c, Num %d, Compl %s\n", cep, face, num, get_compl(p));
+        fprintf(file_txt, "Endereço: CEP %s, Face %c, Num %d, Compl %s\n", cep, face, num, get_complemento(p));
 
         Registro reg_q = busca_registro(quadras, cep);
         if (reg_q != NULL) {
@@ -301,7 +301,7 @@ void mud (Gerenciador quadras, Gerenciador pessoas, char* cpf, char* cep, char f
     set_cep(p, cep);
     set_face(p, face);
     set_num(p, num);
-    set_compl(p, cmpl);
+    set_complemento(p, cmpl);
 
     char buffer_dados[1024];
     get_dados_completos_pessoa(p, buffer_dados);
@@ -393,7 +393,7 @@ void dspj (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, 
                 break;
         }
 
-        desenha_circulo_desenha_circulo_preto_svg(file_svg, cx, cy);
+        desenha_circulo_preto_svg(file_svg, cx, cy);
 
         libera_quadra(q);
         libera_registro(reg_q);

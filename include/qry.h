@@ -4,6 +4,7 @@
 
 #ifndef QRY_H
 #define QRY_H
+#include <stdio.h>
 
 /// @brief É uma função feita para poder ler o arquivo de entrada qry e chamar funções que irão executar os comandos.
 /// @param quadras É o gerenciador que tem acesso e controle ao hashfile, referente às quadras, do programa.

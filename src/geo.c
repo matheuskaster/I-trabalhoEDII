@@ -3,7 +3,7 @@
 //
 #include "../include/geo.h"
 #include "../include/svg.h"
-#include "../src/quadras.h"
+#include "../include/quadra.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -31,11 +31,11 @@ void geo (Gerenciador quadras, FILE* arq_geo, FILE* arq_svg) {
             double x, y, w, h;
             if (cq == NULL) {
                 //settando cores padroes, pois não foi informado quais sao as cores desejadas.
-                cq = criaCores( "1.0px", "steelblue" , "MistyRose");
+                cq = cria_cores( "1.0px", "steelblue" , "MistyRose");
             }
             sscanf (linha, "q %s %lf %lf %lf %lf", cep, &x, &y, &w, &h);
             Quadra q = cria_quadra(cep, x, y, w, h);
-            desenha_retangulo_svg(arq_svg, q, cq);
+            desenha_quadra_svg(arq_svg, q, cq);
 
             char dados_quadra[1024];
             get_dados_completos_quadra(q, dados_quadra);
@@ -48,10 +48,16 @@ void geo (Gerenciador quadras, FILE* arq_geo, FILE* arq_svg) {
         } else {
             char sw[16], cfill[16], cstrk[16];
             sscanf (linha, "cq %s %s %s", sw, cfill, cstrk);
-            set_sw(cq, sw);
-            set_cfill(cq, cfill);
-            set_cstrk(cq, cstrk);
+
+            if (cq == NULL) {
+                cq = cria_cores(sw, cfill, cstrk);
+            } else {
+                set_sw(cq, sw);
+                set_cfill(cq, cfill);
+                set_cstrk(cq, cstrk);
+            }
         }
     }
+    libera_cores(cq);
     fecha_svg(arq_svg);
 }

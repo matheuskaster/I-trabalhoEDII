@@ -13,7 +13,8 @@ void abre_svg (FILE* arq_svg);
 /// @brief Passa as características do retângulo para o svg poder o desenhar.
 /// @param arq_svg É um arquivo do tipo FILE* para acessar o arquivo.
 /// @param q É um ponteiro que aponta para a quadra que será desenhada, no formato de um retângulo.
-void desenha_retangulo_svg (FILE* arq_svg, Quadra q);
+/// @param cq É o ponteiro que aponta para a estrutura que guarda as cores da quadra.
+void desenha_quadra_svg (FILE* arq_svg, Quadra q, Cores cq);
 
 /// @brief Função que desenha um X vermelha, na âncora da quadra, com os 'x' e 'y' passados por parâmetro.
 /// @param arq_svg É um arquivo do tipo FILE* para acessar o arquivo, que conterá as ilustrações.
@@ -26,7 +27,7 @@ void desenha_x_vermelho_svg (FILE* arq_svg, double x, double y);
 /// @param x Número double, que representa a coordenada que ficará a âncora do texto, no eixo 'x'.
 /// @param y Número double, que representa a coordenada que ficará a âncora do texto, no eixo 'y'.
 /// @param txto É a String que carrega o conteúdo que vai ser escrito no svg, no caso, o número.
-void desenha_numero_moradores_svg (FILE* arq_svg, double x, double y, char* cor, int tamanho, char* txto);
+void desenha_numero_moradores_svg (FILE* arq_svg, double x, double y, char* txto);
 
 /// @brief Função que desenha uma cruz vermelha, no endereço do morador que faleceu, com os 'x' e 'y' passados por parâmetro.
 /// @param arq_svg É um arquivo do tipo FILE* para acessar o arquivo, que conterá as ilustrações.

@@ -17,8 +17,8 @@ void abre_svg (FILE* arq_svg) {
     fprintf(arq_svg,"<g>\n");
 }
 
-void desenha_quadra_svg (FILE* arq_svg, Quadra q) {
-    fprintf(arq_svg, "<rect cep=\"%s\" style=\"fill:%s;fill-opacity:0.5;stroke:%s\" height=\"%lf\" width=\"%lf\" y=\"%lf\" x=\"%lf\" stroke-width=\"%lf\" />\n", get_cep_quadra(q), get_cfill(q), get_cstrk(q), get_h_quadra(q), get_w_quadra(q), get_y_quadra(q), get_x_quadra(q), 1.0);
+void desenha_quadra_svg (FILE* arq_svg, Quadra q, Cores cq) {
+    fprintf(arq_svg, "<rect cep=\"%s\" style=\"fill:%s;fill-opacity:0.5;stroke:%s\" height=\"%lf\" width=\"%lf\" y=\"%lf\" x=\"%lf\" stroke-width=\"%s\" />\n", get_cep_quadra(q), get_cfill(cq), get_cstrk(cq), get_h_quadra(q), get_w_quadra(q), get_y_quadra(q), get_x_quadra(q), get_sw(cq));
 }
 
 void desenha_x_vermelho_svg (FILE* arq_svg, double x, double y) {

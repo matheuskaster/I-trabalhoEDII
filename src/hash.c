@@ -190,7 +190,7 @@ void insere_registro(Gerenciador hash, Registro r) {
                 int tamanho_diretorio_atual = 1 << h->cabecalho.profundidade_global;
                 h->cabecalho.profundidade_global++;
                 fseek(h->dir_file, 0, SEEK_SET);
-                fwrite(&(h->cabecalho.profundidade_global), sizeof(StrCabecalho), 1, h->dir_file);
+                fwrite(&(h->cabecalho), sizeof(StrCabecalho), 1, h->dir_file);
 
                 for (int i = 0; i < tamanho_diretorio_atual; i++) {
                     long offset_existente = get_bucket_offset(h, i);

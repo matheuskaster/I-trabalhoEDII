@@ -7,4 +7,4 @@ include_directories(include)
 
 file(GLOB_RECURSE SOURCES "src/*.c")
 
-add_executable(I_trabalhoEDII ${SOURCES})
+add_executable(ted ${SOURCES})
