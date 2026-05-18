@@ -76,7 +76,7 @@ void recebe_moradia (Pessoa p, char* cep, char face, int num, char* compl) {
 }
 
 Pessoa cria_pessoa (char* cpf, char* nome, char* sobrenome, char sexo, char* nasc) {
-    StrPessoa *p = malloc(sizeof(StrPessoa));
+    StrPessoa *p = calloc(1, sizeof(StrPessoa));
     strcpy(p->cpf, cpf);
     strcpy(p->nome, nome);
     strcpy(p->sobrenome, sobrenome);
