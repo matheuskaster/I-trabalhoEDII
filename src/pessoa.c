@@ -9,8 +9,8 @@
 
 typedef struct {
     char cpf[32];
-    char nome[32];
-    char sobrenome[32];
+    char nome[128];
+    char sobrenome[128];
     char sexo;
     char nasc[32];
     bool m;

@@ -91,14 +91,14 @@ int main(int argc, char *argv[]) {
     }
     free(path_svg_geo);
 
-    char* path_dir_quadras = atualiza_extensao(dir_saida, arq_geo, ".dir");
-    char* path_bkt_quadras = atualiza_extensao(dir_saida, arq_geo, ".bkt");
+    char* path_dir_quadras = atualiza_extensao(dir_saida, arq_geo, ".geo.dir");
+    char* path_bkt_quadras = atualiza_extensao(dir_saida, arq_geo, ".geo.bkt");
     Gerenciador hash_quadras = cria_hash(path_dir_quadras, path_bkt_quadras);
     free(path_dir_quadras);
     free(path_bkt_quadras);
 
-    char* path_dir_pessoas = atualiza_extensao(dir_saida, arq_pm, ".dir");
-    char* path_bkt_pessoas = atualiza_extensao(dir_saida, arq_pm, ".bkt");
+    char* path_dir_pessoas = atualiza_extensao(dir_saida, arq_pm, ".pm.dir");
+    char* path_bkt_pessoas = atualiza_extensao(dir_saida, arq_pm, ".pm.bkt");
     Gerenciador hash_pessoas = cria_hash(path_dir_pessoas, path_bkt_pessoas);
     free(path_dir_pessoas);
     free(path_bkt_pessoas);
@@ -128,11 +128,11 @@ int main(int argc, char *argv[]) {
         if (file_svg_qry && file_txt) {
             qry(hash_quadras, hash_pessoas, file_qry, file_txt, file_svg_qry);
 
-            char* path_dump_quadras = atualiza_extensao(dir_saida, arq_geo, ".hfd");
+            char* path_dump_quadras = atualiza_extensao(dir_saida, arq_geo, "geo.hfd");
             gera_dump(hash_quadras, path_dump_quadras);
             free(path_dump_quadras);
 
-            char* path_dump_pessoas = atualiza_extensao(dir_saida, arq_pm, ".hfd");
+            char* path_dump_pessoas = atualiza_extensao(dir_saida, arq_pm, ".pm.hfd");
             gera_dump(hash_pessoas, path_dump_pessoas);
             free(path_dump_pessoas);
         }

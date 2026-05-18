@@ -138,7 +138,7 @@ void censo(Gerenciador pessoas, FILE* file_txt) {
         char sexo = get_sexo_pessoa(p);
         bool morador = eh_morador(p);
 
-        if (sexo == 'm') {
+        if (sexo == 'M') {
             total_homens++;
             if (morador) {
                 moradores_homens++;
@@ -147,7 +147,7 @@ void censo(Gerenciador pessoas, FILE* file_txt) {
                 sem_teto_homens++;
                 total_sem_teto++;
             }
-        } else if (sexo == 'f') {
+        } else if (sexo == 'F') {
             total_mulheres++;
             if (morador) {
                 moradores_mulheres++;
@@ -260,19 +260,19 @@ void rip (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, F
             double cruz_x, cruz_y;
 
             switch (face) {
-                case 'n':
+                case 'N':
                     cruz_x = qx + num;
                     cruz_y = qy;
                     break;
-                case 's' :
+                case 'S' :
                     cruz_x = qx + num;
                     cruz_y = qy + qh;
                     break;
-                case 'l' :
+                case 'L' :
                     cruz_x = qx + qw;
                     cruz_y = qy + num;
                     break;
-                case 'o' :
+                case 'O' :
                     cruz_x = qx;
                     cruz_y = qy + num;
                     break;
@@ -286,10 +286,8 @@ void rip (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, F
         fprintf(file_txt, "Situação: Sem teto .\n");
     }
 
-    // 5. REMOÇÃO DO BANCO (O falecido deixa de existir no sistema)
     remove_registro(pessoas, reg_pessoa);
 
-    // 6. Faxina da Memória
     libera_pessoa(p);
     libera_registro(reg_pessoa);
 }
@@ -322,19 +320,19 @@ void mud (Gerenciador quadras, Gerenciador pessoas, char* cpf, char* cep, char f
         double x_dest, y_dest;
 
         switch (face) {
-            case 'n':
+            case 'N':
                 x_dest = qx + num;
                 y_dest = qy;
                 break;
-            case 's' :
+            case 'S' :
                 x_dest = qx + num;
                 y_dest = qy + qh;
                 break;
-            case 'l' :
+            case 'L' :
                 x_dest = qx + qw;
                 y_dest = qy + num;
                 break;
-            case 'o' :
+            case 'O' :
                 x_dest = qx;
                 y_dest = qy + num;
                 break;
@@ -375,19 +373,19 @@ void dspj (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, 
         double cx, cy;
 
         switch (face) {
-            case 'n':
+            case 'N':
                 cx = qx + num;
                 cy = qy;
                 break;
-            case 's' :
+            case 'S' :
                 cx = qx + num;
                 cy = qy + qh;
                 break;
-            case 'l' :
+            case 'L' :
                 cx = qx + qw;
                 cy = qy + num;
                 break;
-            case 'o' :
+            case 'O' :
                 cx = qx;
                 cy = qy + num;
                 break;
