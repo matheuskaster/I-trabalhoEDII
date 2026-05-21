@@ -51,11 +51,12 @@ void h (Gerenciador pessoas, char* cpf, FILE* file_txt);
 void nasc (Gerenciador pessoas, char* cpf, char* nome, char* sobrenome, char* nasc, char sexo);
 
 /// @brief Faz com que o programa registre que uma pessoa de Bitnópolis faleceu.
+/// @param quadras Estrutura que tem acesso a todas as informacoes para alterar os atributos das pessoas.
 /// @param pessoas Estrutura que tem acesso a todas as informacoes para alterar os atributos das pessoas.
 /// @param cpf É o cpf específico de cada pessoa, para identificar qual é a pessoa desejada.
 /// @param file_txt Arquivo onde será reportado todos os dados sobre a pessoa falecida.
 /// @param file_svg Arquivo que será ilustrará Colocar uma pequena cruz vermelha no local do endereço (se morador).
-void rip (Gerenciador pessoas, char* cpf, FILE* file_txt, FILE* file_svg);
+void rip (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, FILE* file_svg);
 
 /// @brief Faz com que o programa registre que o morador identificado por cpf se mudou para um novo endereço.
 /// @param quadras Estrutura que tem acesso a todas as informacoes para alterar os atributos das quadras.

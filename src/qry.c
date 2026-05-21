@@ -51,7 +51,7 @@ void qry (Gerenciador quadras, Gerenciador pessoas, FILE* file_qry, FILE* file_t
         else if (strcmp(comando, "rip") == 0) {
             char cpf[15];
             sscanf(linha, "rip %s", cpf);
-            rip(pessoas, cpf, file_txt, file_svg);
+            rip(quadras, pessoas, cpf, file_txt, file_svg);
         }
         else if (strcmp(comando, "mud") == 0) {
             char cpf[15], cep[10], cmpl[10];
