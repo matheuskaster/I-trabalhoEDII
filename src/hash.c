@@ -6,7 +6,7 @@
 #define TAM_BUCKET 3
 
 typedef struct {
-    char chave[32];
+    char chave[64];
     char dados[1024];
 } StrRegistro;
 

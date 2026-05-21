@@ -236,6 +236,9 @@ void nasc (Gerenciador pessoas, char* cpf, char* nome, char* sobrenome, char* na
 
 void rip (Gerenciador quadras, Gerenciador pessoas, char* cpf, FILE* file_txt, FILE* file_svg) {
     Registro reg_pessoa = busca_registro(pessoas, cpf);
+    if (reg_pessoa == NULL) {
+        return;
+    }
     Pessoa p = reconstroi_pessoa(cpf, get_dados_registro(reg_pessoa));
 
     fprintf(file_txt, "--- FALECIMENTO ---\n");
