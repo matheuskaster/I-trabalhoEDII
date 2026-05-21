@@ -44,7 +44,7 @@ void desenha_quadrado_vermelho_svg (FILE* arq_svg, double x, double y, char* cpf
 }
 
 void desenha_circulo_preto_svg(FILE* arq_svg, double x, double y) {
-    fprintf(arq_svg, "<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" stroke=\"black\" fill=\"black\" opacity=\"%lf\" stroke-width=\"%lf\" />\n", x, y, 2.0, 0.5, 1.5);
+    fprintf(arq_svg, "<circle cx=\"%lf\" cy=\"%lf\" r=\"%lf\" stroke=\"black\" fill=\"black\" opacity=\"%lf\" stroke-width=\"%lf\" />\n", x, y, 2.0, 3.5, 1.5);
 }
 
 void fecha_svg(FILE* arq_svg) {

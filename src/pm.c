@@ -20,9 +20,7 @@ void pm (Gerenciador pessoas, FILE* arq_pm) {
         if (linha[0] == '\n' || linha[0] == '#'){
             continue;
         }
-
         sscanf(linha, "%s", comando);
-
         switch (comando[0]) {
             case 'p': {
                 char cpf[32], nome[128], sobrenome[128], dataNascimento[32];
@@ -33,7 +31,6 @@ void pm (Gerenciador pessoas, FILE* arq_pm) {
                 char dados_pessoa[1024];
                 get_dados_completos_pessoa(p, dados_pessoa);
                 Registro reg = cria_registro(cpf, dados_pessoa);
-
                 insere_registro(pessoas, reg);
 
                 libera_registro(reg);

@@ -10,10 +10,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-void qry (Gerenciador quadras, Gerenciador pessoas, FILE* file_qry, FILE* file_txt, FILE* file_svg) {
+void qry (Gerenciador quadras, Gerenciador pessoas, FILE* file_qry, FILE* file_txt, FILE* file_svg, Cores cq) {
 
     char linha[512];
     char comando[6];
+
+    abre_svg(file_svg);
 
     while (fgets(linha, sizeof(linha), file_qry) != NULL) {
         if(linha[0] == '\n' || linha[0] == '\r'){
@@ -65,4 +67,19 @@ void qry (Gerenciador quadras, Gerenciador pessoas, FILE* file_qry, FILE* file_t
             dspj(quadras, pessoas, cpf, file_txt, file_svg);
         }
     }
+    int total;
+    Registro* vetor_quadras = pega_todos_registros(quadras, &total);
+    for (int i = 0; i < total; i++) {
+        Registro r = vetor_quadras[i];
+
+        char* cep = get_chave_registro(r);
+        char* dados = get_dados_registro(r);
+        Quadra q = reconstroi_quadra(cep, dados);
+        desenha_quadra_svg(file_svg, q, cq);
+
+        libera_registro(r);
+        libera_quadra(q);
+    }
+    free(vetor_quadras);
+    fecha_svg(file_svg);
 }

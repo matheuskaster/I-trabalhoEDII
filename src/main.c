@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "svg.h"
 #include "../include/path_utils.h"
 #include "../include/geo.h"
 #include "../include/pm.h"
@@ -16,6 +18,7 @@ int main(int argc, char *argv[]) {
     char arq_geo[FILE_NAME_LEN] = "";
     char arq_qry[FILE_NAME_LEN] = "";
     char arq_pm[FILE_NAME_LEN] = "";
+    Cores cq = cria_cores( "1.0px", "steelblue" , "MistyRose");;
 
     FILE *file_geo = NULL;
     FILE *file_pm = NULL;
@@ -104,7 +107,7 @@ int main(int argc, char *argv[]) {
     free(path_bkt_pessoas);
 
 
-    geo(hash_quadras, file_geo, file_svg_geo);
+    geo(hash_quadras, file_geo, file_svg_geo, cq);
     pm(hash_pessoas, file_pm);
 
     if (strlen(arq_qry) > 0) {
@@ -126,7 +129,7 @@ int main(int argc, char *argv[]) {
         free(path_txt_qry);
 
         if (file_svg_qry && file_txt) {
-            qry(hash_quadras, hash_pessoas, file_qry, file_txt, file_svg_qry);
+            qry(hash_quadras, hash_pessoas, file_qry, file_txt, file_svg_qry, cq);
 
             char* path_dump_quadras = atualiza_extensao(dir_saida, arq_geo, "geo.hfd");
             gera_dump(hash_quadras, path_dump_quadras);
@@ -142,6 +145,7 @@ int main(int argc, char *argv[]) {
     fclose(file_geo);
     fclose(file_svg_geo);
     fclose(file_pm);
+    libera_cores(cq);
     if (file_qry)     fclose(file_qry);
     if (file_svg_qry) fclose(file_svg_qry);
     if (file_txt)     fclose(file_txt);
