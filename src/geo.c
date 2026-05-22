@@ -45,7 +45,7 @@ void geo (Gerenciador quadras, FILE* arq_geo, FILE* arq_svg, Cores cq) {
 
             libera_registro(reg);
             libera_quadra(q);
-        } else {
+        } else if (strcmp(comando, "cq") == 0) {
             char sw[16], cfill[16], cstrk[16];
             sscanf (linha, "cq %s %s %s", sw, cfill, cstrk);
 
