@@ -99,8 +99,8 @@ void get_dados_completos_pessoa(Pessoa p, char* buffer) {
 
 
 Pessoa reconstroi_pessoa(char* cpf, char* dados_do_hash) {
-    char nome[32], sobrenome[32], nasc[12];
-    char sexo;
+    char nome[32] = {0}, sobrenome[32] = {0}, nasc[12] = {0};
+    char sexo = '\0';
 
     if (strstr(dados_do_hash, "Nao e morador") != NULL) {
         sscanf(dados_do_hash, "CPF: %*s | Nome: %s | SOBRENOME: %s | Sexo: %c | Nasc: %s | Nao e morador", nome, sobrenome, &sexo, nasc);
@@ -108,9 +108,9 @@ Pessoa reconstroi_pessoa(char* cpf, char* dados_do_hash) {
         return cria_pessoa(cpf, nome, sobrenome, sexo, nasc);
     }
 
-    char cep[16], compl[16];
-    char face;
-    int num;
+    char cep[16] = {0}, compl[16] = {0};
+    char face = '\0';
+    int num = 0;
 
     sscanf(dados_do_hash, "CPF: %*s | Nome: %s | SOBRENOME: %s | Sexo: %c | Nasc: %s | CEP: %s | Face: %c | Num: %d | Compl: %s", nome, sobrenome, &sexo, nasc, cep, &face, &num, compl);
     Pessoa p = cria_pessoa(cpf, nome, sobrenome, sexo, nasc);
